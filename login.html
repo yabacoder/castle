@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <title>Login</title>
+</head>
+<body>
+  <div class="logbody">
+    <div class="sign-in">
+        <div class="sign-in-cont sign-width">
+          <header class="head">
+            <img src="./images/logo-01-copy.png" alt="" width="250" >
+          </header>
+          <div class="formsec">
+               
+                <form id="form1">
+                    <h2>Login</h2>      
+                <div class="row">
+                    <div class="field">
+                            <span><input type="email" name="email" id="email-login"  placeholder="Your email" required="" autofocus=""></span>
+                    </div>
+                </div>
+                   
+                    <div class="row">
+                        <div class="field">
+                             
+                              <span><input type="password" name="password" id="password-login"  placeholder="Your password" required="" autocomplete="off" ></span>
+                            </div>
+              
+                          </div>
+                          <div class="row">
+                                <button class="signin"  disabled="disabled">
+                                  Sign In
+                                </button>
+                            </div>
+                            <div class="row">
+                                    <p class="">Don't have an account? <a href="#" onclick="SecondSwap()">Sign up</a></p>
+    
+                                    <p class="forgot-password" ><a href="#" onclick="Swap()" >Forgot password?</a></p>
+                                  </div>
+                      
+            </form>
+
+          <form id="form2" >
+            <div class="row">
+              <h2>             
+                Reset Your Password
+              </h2>
+            </div>
+            <div class="row">
+              <div class="field ">
+                
+                <span><input type="email" name="email" id="email-login" placeholder="Your email" required="" autofocus="" autocomplete="off" ></span>
+              </div>
+            </div>
+            <div class="row">
+              <button class="request-new-password" disabled="disabled">
+                Reset my password
+              </button>
+            </div>
+            <div class="row">
+              <p class="copy">Nevermind <a href="#" onclick="Swap()" >Cancel</a></p>
+            </div>
+          </form>
+
+          <form id="form3">
+              <h2>Sign Up</h2> 
+              <div class="row">
+                  <div class="field">
+                          <span><input type="text" name="fname" id="fname"  placeholder="Fullname" required="" autofocus=""></span>
+                  </div>
+              </div>    
+              
+          <div class="row">
+              <div class="field">
+                      <span><input type="email" name="email" id="email-login"  placeholder="Your email" required="" autofocus=""></span>
+              </div>
+          </div>
+             
+              <div class="row">
+                  <div class="field">
+                       
+                        <span><input type="password" name="password" id="password-login"  placeholder="Your password" required="" autocomplete="off" ></span>
+                      </div>
+        
+                    </div>
+                    <div class="row">
+                        <div class="field">
+                             
+                              <span><input type="password" name="password" id="password-login"  placeholder="Confirm password" required="" autocomplete="off" ></span>
+                            </div>
+              
+                          </div>
+                          
+                    <div class="row">
+                          <button class="signin"  disabled="disabled">
+                           Submit
+                          </button>
+                      </div>
+                      <p class="copy">Go Back To<a href="#" onclick="SecondSwap()" > Login</a></p>
+                
+      </form>
+
+        </div>
+          </div>
+          </div>
+
+
+
+          <script src="main.js"></script>
+        </div>
+</body>
+</html>
