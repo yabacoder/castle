@@ -168,7 +168,7 @@ input::placeholder, option, .selected {
 }
 .form-group{
     width: 100%;
-    max-width: 330px;
+    max-width: 550px;
     padding: 15px;
     margin: auto;
 
@@ -184,4 +184,10 @@ button{
 button:disabled{
     opacity: 0.3;
     cursor: wait;
+}
+
+
+.nav-active{
+    background: #7d7d7d;
+    font-weight: bold;
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import Side from "./side";
+import Alert from "../../helpers/alert";
 
 class Layout extends React.Component {
     render() {

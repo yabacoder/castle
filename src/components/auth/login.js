@@ -1,5 +1,7 @@
 import React from 'react';
-import {Post} from "../helpers/services";
+import {Post} from "../../helpers/services";
+import {Token} from "../../config";
+import {Redirect} from "react-router-dom";
 
 class Login extends React.Component {
 
@@ -22,10 +24,14 @@ class Login extends React.Component {
     formHandler=(e)=>{
         e.preventDefault();
         this.setState({disabled:true});
-        Post("/login").then(result=>{
+
+        Post("/login", this.state).then(result=>{
             this.setState({disabled:false});
             if (result.token_type){
-
+                localStorage.setItem('castles_token', result.access_token);
+                window.location.reload()
+            }else if (result.message){
+                alert("Email or Password Incorrect!")
             }
         })
     };
@@ -33,6 +39,9 @@ class Login extends React.Component {
 
     render() {
         const {state} = this;
+        if (Token){
+            return <Redirect to="/"/>;
+        }
         return (
             <div className="logbody">
                 <div className="sign-in">
@@ -41,7 +50,6 @@ class Login extends React.Component {
                             <img src="../../images/logo-01-copy.png" alt="" width="250"/>
                         </header>
                         <div className="formsec">
-
                             <form onSubmit={this.formHandler}>
                                 <h2>Login</h2>
                                 <div className="row">
@@ -55,7 +63,7 @@ class Login extends React.Component {
                                 <div className="row">
                                     <div className="field">
                                         <span>
-                                            <input type="password" name="password" placeholder="Your password" onChange={this.onChange}/>
+                                            <input type="password" name="password" placeholder="Your password" onChange={this.onChange} required/>
                                         </span>
                                     </div>
 
