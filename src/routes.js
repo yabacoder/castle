@@ -5,10 +5,12 @@ import SaveProperty from "./components/property/save";
 import SaveAgent from "./components/Agent/save";
 import Login from "./components/auth/login";
 import EditProperty from "./components/property/edit";
+import {Logout} from "./components/auth/logout";
 
 export const Routes = [
     {path:"/", component:Dashboard},
     {path:"/login", component:Login},
+    {path:"/logout", component:Logout},
     {path:"/properties", component:Properties},
     {path:"/property/add", component:SaveProperty },
     {path:"/property/edit/:id", component:EditProperty },

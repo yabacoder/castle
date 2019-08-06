@@ -1,5 +1,5 @@
 import React from 'react';
-import {Post} from "../../helpers/services";
+import {AuthGet, Get, Post} from "../../helpers/services";
 import {Token} from "../../config";
 import {Redirect} from "react-router-dom";
 
@@ -25,14 +25,26 @@ class Login extends React.Component {
         e.preventDefault();
         this.setState({disabled:true});
 
-        Post("/login", this.state).then(result=>{
-            this.setState({disabled:false});
+        Post("/login?admin=true", this.state).then(result=>{
             if (result.token_type){
-                localStorage.setItem('castles_token', result.access_token);
-                window.location.reload()
+                this.user(result.access_token);
             }else if (result.message){
+                alert("Email or Password Incorrect!");
+                this.setState({disabled:false});
+            }
+        })
+    };
+
+    user=(token)=>{
+        AuthGet('/user',token).then(result=>{
+            if (result.status === 1 && result.data.role.id >= 3) {
+                localStorage.setItem('castles_token', token);
+                localStorage.setItem('castles_user', JSON.stringify(result.data));
+                window.location.reload()
+            }else {
                 alert("Email or Password Incorrect!")
             }
+            this.setState({disabled:false});
         })
     };
 

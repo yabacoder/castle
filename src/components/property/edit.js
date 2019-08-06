@@ -1,5 +1,5 @@
 import React from 'react';
-import {Post} from "../../helpers/services";
+import {Get, Post} from "../../helpers/services";
 import Layout from "../layout";
 import Form from "./form";
 
@@ -7,28 +7,37 @@ class EditProperty extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            disabled: false
+            disabled: false,
+            state_id: 25
         }
     }
 
     componentDidMount(){
         window.scroll(0,0);
-        this.fetch();
+        this.fetch(this.props.match.params.id);
+
     }
 
-    fetch=()=>{
-
+    fetch=(id)=>{
+        Get("/admin/properties/edit/"+id).then((result)=>{
+            if(result.status){
+                this.setState(result.data);
+            }
+        })
     };
 
-    onChange=(e)=>{
+
+    onChange =(e) =>{
         this.setState({[e.target.name]:e.target.value});
     };
 
     formHandler=(e)=>{
         e.preventDefault();
-        Post("/admin/properties").then(result=>{
+        Post("/admin/properties/save", this.state).then(result=>{
             if (result.status === 1){
-
+                alert(result.message);
+                this.state = {};
+                sessionStorage.clear();
             }
         })
     };

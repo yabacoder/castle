@@ -77,7 +77,8 @@ class Properties extends React.Component {
                             <th>
                                 <input onChange={this.selectAll} type="checkbox"/>
                             </th>
-                            <th>Name</th>
+                            <th>ID</th>
+                            <th>Title</th>
                             <th>Type</th>
                             <th>Location</th>
                             <th>Bedrooms</th>
@@ -93,6 +94,7 @@ class Properties extends React.Component {
                                     <th>
                                         <input value={data[key].id} checked={this.state.ids.indexOf(""+data[key].id+"") > -1} onChange={this.select} type="checkbox"/>
                                     </th>
+                                    <td>{data[key].id}</td>
                                     <td>{data[key].title}</td>
                                     <td>{data[key].type}</td>
                                     <td>{data[key].locality+", "+data[key].state}</td>

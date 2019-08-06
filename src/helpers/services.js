@@ -52,3 +52,26 @@ export function Get(path) {
 
     });
 }
+
+export function AuthGet(path, Token) {
+    return new Promise((resolve, reject) =>{
+
+        fetch(API+path, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${Token}`
+            }
+        })
+            .then((response) => response.json())
+            .then((res) => {
+                resolve(res);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
+
+    });
+}

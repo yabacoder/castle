@@ -5,6 +5,7 @@ const menu = [
     {url: "/", label:"Dashboard"},
     {url: "/properties", label:"Properties"},
     {url: "/agents", label:"Agents"},
+    {url: "/logout", label:"Logout"},
 ];
 
 class Side extends React.Component {

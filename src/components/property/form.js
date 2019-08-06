@@ -9,8 +9,9 @@ class Form extends React.Component {
             states: [],
             localities: [],
             types: [],
+            labels: [],
             statuses: [],
-            nums : [0,1,2,3,4,5,6,7,8,9]
+            nums : [1,2,3,4,5,6,7,8,9,10]
         }
     }
     componentDidMount(){
@@ -37,6 +38,11 @@ class Form extends React.Component {
         Get('/property_statuses').then(result=>{
             if (result.status === 1) {
                 this.setState({statuses: result.data})
+            }
+        });
+        Get('/labels').then(result=>{
+            if (result.status === 1) {
+                this.setState({labels: result.data})
             }
         });
     };
@@ -98,6 +104,26 @@ class Form extends React.Component {
                     </div>
 
                     <div className="form-group">
+                        <select className="form-control" name="label_id" onChange={props.onChange}>
+                            <option value="" disabled selected hidden>Label</option>
+                            {
+                                this.state.labels.map(data=>(
+                                    <option selected={state.label_id-0 === data.id-0} value={data.id}>{data.name}</option>
+                                ))
+                            }
+                        </select>
+                    </div>
+
+                    <div className="form-group">
+                        <select className="form-control" onChange={props.onChange} name="bedrooms">
+                            <option value="" disabled selected hidden>Bedrooms</option>
+                            {this.state.nums.map(data=>(
+                                <option selected={state.bedrooms-0 === data} value={data}>{data}</option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <div className="form-group">
                         <select className="form-control" onChange={props.onChange} name="bathrooms">
                             <option value="" disabled selected hidden>Bathrooms</option>
                             {this.state.nums.map(data=>(
@@ -107,10 +133,10 @@ class Form extends React.Component {
                     </div>
 
                     <div className="form-group">
-                        <select className="form-control" onChange={props.onChange} name="toilet">
+                        <select className="form-control" onChange={props.onChange} name="toilets">
                             <option value="" disabled selected hidden>Toilets</option>
                             {this.state.nums.map(data=>(
-                                <option selected={state.toilet-0 === data} value={data}>{data}</option>
+                                <option selected={state.toilets-0 === data} value={data}>{data}</option>
                             ))}
                         </select>
                     </div>
