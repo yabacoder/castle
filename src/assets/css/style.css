@@ -53,15 +53,15 @@ form{
 .signin, .request-new-password{
 margin-top: 30px;
 }
-.row button {
+button {
+/*.row button {*/
     display: block;
     background: #fe8c00;
     color: #fff;
-    width: 100%;
     font-size: 14px;
     font-weight: 500;
     border-radius: 6px;
-    padding: 12px 0;
+    padding: 12px;
     border: 1px solid transparent;
     transition: all .4s ease;
 }

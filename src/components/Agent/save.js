@@ -4,7 +4,7 @@ import Layout from "../layout";
 class SaveAgent extends React.Component {
     render() {
         return (
-            <Layout title="Add Property">
+            <Layout title="Add Agent">
                 <div className="container mt-3">
                     <form action="/action_page.php">
                         <div className="form-group">
