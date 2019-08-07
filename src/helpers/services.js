@@ -1,9 +1,9 @@
-import { API, Token } from "../config";
+import { API, LiveAPI, Token, LiveToken } from "../config";
 
 
-export function Post(path,data) {
+export function Post(path,data,live) {
     return new Promise((resolve, reject) =>{
-        fetch(API+path, {
+        fetch(live?LiveAPI+path:API+path, {
             method: 'POST',
             headers: Token?{
                 Accept: 'application/json',
@@ -27,10 +27,10 @@ export function Post(path,data) {
     });
 }
 
-export function Get(path) {
+export function Get(path,live) {
     return new Promise((resolve, reject) =>{
 
-        fetch(API+path, {
+        fetch(live?LiveAPI+path:API+path, {
             method: 'GET',
             headers: Token?{
                 Accept: 'application/json',
@@ -53,10 +53,10 @@ export function Get(path) {
     });
 }
 
-export function AuthGet(path, Token) {
+export function AuthGet(path, Token,live) {
     return new Promise((resolve, reject) =>{
 
-        fetch(API+path, {
+        fetch(live?LiveAPI+path:API+path, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',

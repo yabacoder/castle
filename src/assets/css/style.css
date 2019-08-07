@@ -53,6 +53,7 @@ form{
 .signin, .request-new-password{
 margin-top: 30px;
 }
+
 button {
 /*.row button {*/
     display: block;
@@ -168,10 +169,14 @@ input::placeholder, option, .selected {
 }
 .form-group{
     width: 100%;
-    max-width: 550px;
-    padding: 15px;
+    max-width: 900px;
+    padding: 30px;
     margin: auto;
 
+}
+
+.form-control {
+    height: calc(2.0em + .75rem + 2px);
 }
 
 
@@ -191,3 +196,30 @@ button:disabled{
     background: #7d7d7d;
     font-weight: bold;
 }
+
+.links a{
+    color: #0069d9 !important;
+    cursor: pointer;
+}
+
+.invalid{
+    border-color: #dc3545;
+}
+
+.pdt{
+    padding-top: 20px;
+}
+
+.invalid-feedback{
+    display: block;
+    width:100%;
+    margin-top:.25rem;
+    font-size:80%;
+    color:#dc3545
+}
+
+.alert{
+    z-index: 999882;
+}
+
+

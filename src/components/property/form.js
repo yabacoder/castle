@@ -1,5 +1,6 @@
 import React from 'react';
 import {Get, Post} from "../../helpers/services";
+import {Input, Select, Textarea} from "../../helpers/form";
 
 class Form extends React.Component {
 
@@ -49,7 +50,6 @@ class Form extends React.Component {
 
     locality=(e)=>{
         const state = e.target.value;
-
         this.props.onChange(e);
 
         this.setState({state_id:state});
@@ -63,131 +63,74 @@ class Form extends React.Component {
 
 
 
-
-
     render() {
         const {props} = this;
         const {state} = props;
         return (
             <div className="container mt-3">
 
-                <form onSubmit={props.formHandler}>
+                <form onSubmit={props.formHandler} className="form-group card">
 
-                    <div className="form-group">
-                        <input type="text" className="form-control" onChange={props.onChange} placeholder="Agent Id" value={state.agent_id} name="agent_id"/>
+                    <div className="row">
+                        <div className="col-md-12 pdt">
+                            <Input label="Title" error={state.errors.title} onChange={props.onChange} value={state.title} name="title"/>
+                        </div>
+
+                        <div className="col-md-6 pdt">
+                            <Select label="Property Status / Category" error={state.errors.status_id} selected={state.status_id} options={this.state.statuses} name="status_id" onChange={props.onChange}/>
+                        </div>
+
+                        <div className="col-md-6 pdt">
+                            <Input label="Agent Id" onChange={props.onChange} error={state.errors.agent_id} type="number" placeholder="e.g 3058" value={state.agent_id} name="agent_id"/>
+                        </div>
+
+                        <div className="col-md-6 pdt">
+                            <Select label="Property Type" name="type_id" error={state.errors.type_id} selected={state.type_id-0} options={this.state.types} onChange={props.onChange}/>
+                        </div>
+
+                        <div className="col-md-6 pdt">
+                            <Select label="Label" name="label_id" error={state.errors.label_id} selected={state.label_id-0} options={this.state.labels} onChange={props.onChange}/>
+                        </div>
+
+                        <div className="col-md-6 pdt">
+                            <Select label="Bedrooms" name="bedrooms" error={state.errors.bedrooms} selected={state.bedrooms-0} options={this.state.nums} onChange={props.onChange}/>
+                        </div>
+
+                        <div className="col-md-6 pdt">
+                            <Select label="Bathrooms" name="bedrooms" error={state.errors.bathrooms} selected={state.bathrooms-0} options={this.state.nums} onChange={props.onChange}/>
+                        </div>
+
+                        <div className="col-md-6 pdt">
+                            <Select label="Toilets" name="toilets" error={state.errors.toilets} selected={state.toilets-0} options={this.state.nums} onChange={props.onChange}/>
+                        </div>
+
+                        <div className="col-md-6 pdt">
+                            <Select label="Parking space" name="parking" error={state.errors.parking} selected={state.parking-0} options={this.state.nums} onChange={props.onChange}/>
+                        </div>
+
+                        <div className="col-md-12 pdt">
+                            <Input label="Price" type="number" onChange={props.onChange} error={state.errors.price} value={state.price} name="price"/>
+                        </div>
+
+                        <div className="col-md-6 pdt">
+                            <Select label="State" name="state_id" error={state.errors.state_id} selected={state.state_id-0} options={this.state.states} onChange={this.locality}/>
+                        </div>
+
+                        <div className="col-md-6 pdt">
+                            <Select label="Locality" name="locality_id" error={state.errors.locality_id} selected={state.locality_id-0} options={this.state.localities} onChange={props.onChange}/>
+                        </div>
+
+                        <div className="col-md-12 pdt">
+                            <Input label="Address" type="text" error={state.errors.address} onChange={props.onChange} name="address" value={state.address} placeholder="address"/>
+                        </div>
+
+                        <div className="col-md-12 pdt">
+                            <Textarea label="Description" error={state.errors.description} onChange={props.onChange} name="description" value={state.description}/>
+                        </div>
                     </div>
 
-                    <div className="form-group">
-                        <input type="text" onChange={props.onChange} className="form-control" placeholder="Title" value={state.title} name="title"/>
-                    </div>
-
-                    <div className="form-group">
-                        <select className="form-control" name="status_id" onChange={props.onChange}>
-                            <option value="" disabled selected hidden>Property Status / Category</option>
-                            {
-                                this.state.statuses.map(data=>(
-                                    <option selected={state.status_id-0 === data.id-0} value={data.id}>{data.name}</option>
-                                ))
-                            }
-                        </select>
-                    </div>
-
-                    <div className="form-group">
-                        <select className="form-control" name="type_id" onChange={props.onChange}>
-                            <option value="" disabled selected hidden>Property Type</option>
-                            {
-                                this.state.types.map(data=>(
-                                    <option selected={state.type_id-0 === data.id-0} value={data.id}>{data.name}</option>
-                                ))
-                            }
-                        </select>
-                    </div>
-
-                    <div className="form-group">
-                        <select className="form-control" name="label_id" onChange={props.onChange}>
-                            <option value="" disabled selected hidden>Label</option>
-                            {
-                                this.state.labels.map(data=>(
-                                    <option selected={state.label_id-0 === data.id-0} value={data.id}>{data.name}</option>
-                                ))
-                            }
-                        </select>
-                    </div>
-
-                    <div className="form-group">
-                        <select className="form-control" onChange={props.onChange} name="bedrooms">
-                            <option value="" disabled selected hidden>Bedrooms</option>
-                            {this.state.nums.map(data=>(
-                                <option selected={state.bedrooms-0 === data} value={data}>{data}</option>
-                            ))}
-                        </select>
-                    </div>
-
-                    <div className="form-group">
-                        <select className="form-control" onChange={props.onChange} name="bathrooms">
-                            <option value="" disabled selected hidden>Bathrooms</option>
-                            {this.state.nums.map(data=>(
-                                <option selected={state.bathrooms-0 === data} value={data}>{data}</option>
-                            ))}
-                        </select>
-                    </div>
-
-                    <div className="form-group">
-                        <select className="form-control" onChange={props.onChange} name="toilets">
-                            <option value="" disabled selected hidden>Toilets</option>
-                            {this.state.nums.map(data=>(
-                                <option selected={state.toilets-0 === data} value={data}>{data}</option>
-                            ))}
-                        </select>
-                    </div>
-
-                    <div className="form-group">
-                        <select className="form-control" onChange={props.onChange} name="parking">
-                            <option value="" disabled selected hidden>Parking space</option>
-                            {this.state.nums.map(data=>(
-                                <option selected={state.parking-0 === data} value={data}>{data}</option>
-                            ))}
-                        </select>
-                    </div>
-
-
-                    <div className="form-group">
-                        <input type="number" className="form-control" onChange={props.onChange} placeholder="Price" value={state.price} name="price"/>
-                    </div>
-
-
-                    <div className="form-group">
-                        <select name="state_id" onChange={this.locality} className="form-control">
-                            <option value="" disabled selected hidden>State</option>
-                            {
-                                this.state.states.map(data=>(
-                                    <option selected={state.state_id-0 === data.id-0} value={data.id}>{data.name}</option>
-                                ))
-                            }
-                        </select>
-                    </div>
-
-                    <div className="form-group">
-                        <select name="locality_id" onChange={props.onChange} className="form-control">
-                            <option value="" disabled selected hidden>Locality</option>
-                            {
-                                this.state.localities.map(data=>(
-                                    <option selected={state.locality_id-0 === data.id-0} value={data.id}>{data.name}</option>
-                                ))
-                            }
-                        </select>
-                    </div>
-
-                    <div className="form-group">
-                        <input type="Text" className="form-control" onChange={props.onChange} id="location" name="address" value={state.address} placeholder="address"/>
-                    </div>
-
-                    <div className="form-group">
-                        <textarea className="form-control" rows="5" onChange={props.onChange} name="description" value={state.description} placeholder="Description"/>
-                    </div>
-
-                    <div className="form-group">
-                        <button disabled={state.disabled} className="btn-block">Save</button>
+                    <div align="right" className="pdt">
+                        <button disabled={state.disabled}> Submit </button>
                     </div>
                 </form>
             </div>

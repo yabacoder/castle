@@ -1,8 +1,9 @@
 import React from 'react';
 import Layout from "../layout";
 import {Link} from "react-router-dom";
-import {Get} from "../../helpers/services";
+import {Get, Post} from "../../helpers/services";
 import Pagination from "react-js-pagination";
+import {showAlert} from "../../helpers/alert";
 
 class Properties extends React.Component {
     constructor(props) {
@@ -17,17 +18,17 @@ class Properties extends React.Component {
 
     componentDidMount(){
         window.scroll(0,0);
-        this.fetch(this.state.activePage);
+        this.fetch();
     }
 
-    fetch=(page)=>{
-        const data = {};
-        let x;
+    fetch=(page = this.state.activePage)=>{
+        this.setState({ids:[]});
         Get(`/admin/properties?page=${page}`).then((result)=>{
             if(result.status){
-                for (x of result.data.data){
+                const data = {};
+                result.data.data.forEach((x)=>{
                     data[x.id] = x
-                }
+                });
                 this.setState({data: data, total: result.data.total})
             }
         })
@@ -52,11 +53,47 @@ class Properties extends React.Component {
     };
 
     selectAll=(e)=>{
-
         this.setState(
             // {ids: this.state.ids.length === Object.keys(this.state.data).length?[]:Object.keys(this.state.data)}
             {ids: e.target.checked?Object.keys(this.state.data):[]}
-            )
+        )
+    };
+
+    migrate=(e)=>{
+        const {ids}=this.state;
+        Post("/migration/list",{ids}).then((result)=>{
+            if (result.status === 1){
+                result.data.forEach((data)=>{
+                    Post("/migrate/single",data,true).then((result)=>{
+                        if (result.status === 1){
+                            Post("/admin/properties/delete",{id: data.id}).then((result)=>{
+                                if (result.status === 1){
+                                    const {ids} = this.state;
+                                    delete this.state.data[data.id];
+                                    let index = ids.indexOf(""+data.id+"");
+                                    if (index > -1){
+                                        ids.splice(index,1);
+                                        this.setState({ids: ids})
+                                    }
+                                }
+                            })
+                        }
+                    })
+                })
+            }
+        })
+    };
+
+    delete=()=>{
+        const {ids}=this.state;
+        Post("/admin/properties/delete",{id: ids}).then((result)=>{
+            if (result.status === 1){
+                for( let id of ids){
+                    delete this.state.data[id];
+                }
+                this.setState({ids: []})
+            }
+        })
     };
 
 
@@ -68,8 +105,8 @@ class Properties extends React.Component {
                     <div align="right">
                         <Link to="/property/add"> <button>Add Property</button> </Link>
                     </div>
-                    <div>
-                        <a href="">Migrate</a> | <a href="">Delete</a>
+                    <div className="links">
+                        <a onClick={this.migrate}>Migrate</a> | <a onClick={this.delete}>Delete</a> | <a onClick={this.fetch}>Refresh</a>
                     </div>
                     <table className="table table-striped">
                         <thead>
