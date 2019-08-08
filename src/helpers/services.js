@@ -8,7 +8,7 @@ export function Post(path,data,live) {
             headers: Token?{
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${Token}`
+                'Authorization': `Bearer ${live?LiveToken:Token}`
             }:{
                 Accept: 'application/json',
                 'Content-Type': 'application/json',

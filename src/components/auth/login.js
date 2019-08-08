@@ -25,7 +25,7 @@ class Login extends React.Component {
         e.preventDefault();
         this.setState({disabled:true});
 
-        Post("/login?admin=true", this.state).then(result=>{
+        Post("/login", this.state).then(result=>{
             if (result.token_type){
                 this.user(result.access_token);
             }else if (result.message){
@@ -47,6 +47,8 @@ class Login extends React.Component {
             this.setState({disabled:false});
         })
     };
+
+
 
 
     render() {

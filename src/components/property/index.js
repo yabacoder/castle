@@ -4,6 +4,8 @@ import {Link} from "react-router-dom";
 import {Get, Post} from "../../helpers/services";
 import Pagination from "react-js-pagination";
 import {showAlert} from "../../helpers/alert";
+import {showLive} from "../auth/live";
+import {LiveToken} from "../../config";
 
 class Properties extends React.Component {
     constructor(props) {
@@ -54,34 +56,38 @@ class Properties extends React.Component {
 
     selectAll=(e)=>{
         this.setState(
-            // {ids: this.state.ids.length === Object.keys(this.state.data).length?[]:Object.keys(this.state.data)}
             {ids: e.target.checked?Object.keys(this.state.data):[]}
         )
     };
 
     migrate=(e)=>{
         const {ids}=this.state;
-        Post("/migration/list",{ids}).then((result)=>{
-            if (result.status === 1){
-                result.data.forEach((data)=>{
-                    Post("/migrate/single",data,true).then((result)=>{
-                        if (result.status === 1){
-                            Post("/admin/properties/delete",{id: data.id}).then((result)=>{
-                                if (result.status === 1){
-                                    const {ids} = this.state;
-                                    delete this.state.data[data.id];
-                                    let index = ids.indexOf(""+data.id+"");
-                                    if (index > -1){
-                                        ids.splice(index,1);
-                                        this.setState({ids: ids})
+        if (LiveToken){
+            Post("/migration/list",{ids}).then((result)=>{
+                if (result.status === 1){
+                    result.data.forEach((data)=>{
+                        Post("/migrate/single",data,true).then((result)=>{
+                            if (result.status === 1){
+                                Post("/admin/properties/delete",{id: data.id}).then((result)=>{
+                                    if (result.status === 1){
+                                        const {ids} = this.state;
+                                        delete this.state.data[data.id];
+                                        let index = ids.indexOf(""+data.id+"");
+                                        if (index > -1){
+                                            ids.splice(index,1);
+                                            this.setState({ids: ids})
+                                        }
                                     }
-                                }
-                            })
-                        }
+                                })
+                            }
+                        })
                     })
-                })
-            }
-        })
+                }
+            })
+        } else {
+            showLive();
+        }
+
     };
 
     delete=()=>{
