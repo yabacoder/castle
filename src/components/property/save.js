@@ -48,8 +48,10 @@ class SaveProperty extends React.Component {
         Post("/admin/properties/save", this.state).then(result=>{
             if (result.status === 1){
                 showAlert(result.message);
-                this.setState(this.defaultState);
-                sessionStorage.clear();
+                // this.setState(this.defaultState);
+                // sessionStorage.clear();
+
+                this.props.history.push(`/property/images/${result.data.id}`);
             }else if (result.errors){
                 this.setState({errors:result.errors})
             }
