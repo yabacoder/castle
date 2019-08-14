@@ -16,7 +16,7 @@ class Dashboard extends React.Component {
     fetch=()=>{
         Get("/admin/analytics").then((result)=>{
             if(result.status === 1){
-                this.setState(result.data);
+                this.setState(result.data[0]);
             }
         })
     };

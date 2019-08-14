@@ -8,7 +8,8 @@ class EditProperty extends React.Component {
         super(props);
         this.state = {
             disabled: false,
-            state_id: 25
+            state_id: 25,
+            errors:{}
         }
     }
 
