@@ -1,14 +1,14 @@
 import React from 'react';
-import {AuthGet, Get, Post} from "../../helpers/services";
+import {AuthGet, Post} from "../../helpers/services";
 import {Token} from "../../config";
 import {Redirect} from "react-router-dom";
 
-class Login extends React.Component {
-
+class Register extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            disabled : false
+            disabled : false,
+            role: 2
         }
     }
 
@@ -25,13 +25,14 @@ class Login extends React.Component {
         e.preventDefault();
         this.setState({disabled:true});
 
-        Post("/login", this.state).then(result=>{
+        Post("/registration", this.state).then(result=>{
             if (result.token_type){
-                this.user(result.access_token);
+                localStorage.setItem('castles_token', result.access_token);
+                window.location.reload()
             }else if (result.message){
                 alert("Email or Password Incorrect!");
-                this.setState({disabled:false});
             }
+            this.setState({disabled:false});
         }).catch(e=>{
             alert("An error occurred!, please try again later");
             this.setState({disabled:false});
@@ -68,7 +69,7 @@ class Login extends React.Component {
                         </header>
                         <div className="formsec">
                             <form onSubmit={this.formHandler}>
-                                <h2>Login</h2>
+                                <h2>Register</h2>
                                 <div className="row">
                                     <div className="field">
                                         <span>
@@ -80,14 +81,29 @@ class Login extends React.Component {
                                 <div className="row">
                                     <div className="field">
                                         <span>
+                                            <input type="text" name="username" onChange={this.onChange} placeholder="Your username" required/>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div className="row">
+                                    <div className="field">
+                                        <span>
                                             <input type="password" name="password" placeholder="Your password" onChange={this.onChange} required/>
                                         </span>
                                     </div>
+                                </div>
 
+                                <div className="row">
+                                    <div className="field">
+                                        <span>
+                                            <input type="password" name="password_confirmation" placeholder="Confirm password" onChange={this.onChange} required/>
+                                        </span>
+                                    </div>
                                 </div>
                                 <div className="row">
                                     <button className="signin" disabled={state.disabled}>
-                                        Sign In
+                                        Sign Up
                                     </button>
                                 </div>
 
@@ -101,4 +117,4 @@ class Login extends React.Component {
     }
 }
 
-export default Login;
+export default Register;

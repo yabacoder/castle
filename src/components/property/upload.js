@@ -1,5 +1,5 @@
 import React from 'react';
-import {API, Token} from "../../config";
+import {API, LiveAPI, LiveToken, Token} from "../../config";
 import request from "superagent";
 import Layout from "../layout";
 import {Get} from "../../helpers/services";
@@ -59,7 +59,7 @@ class Upload extends React.Component {
     };
 
 
-    formHandler=(files)=>{
+    /*formHandler=(files)=>{
         this.setState({formClass:"is-uploading"});
         // set request
         let req = request.post(`${API}/admin/properties/${this.id}/upload`);
@@ -76,6 +76,39 @@ class Upload extends React.Component {
                 this.fetch();
             }
         });
+    };*/
+
+    formHandler=(files)=>{
+        this.setState({formClass:"is-uploading"});
+        // set request
+
+        let formData = new FormData();
+
+        Object.keys(files).forEach( key=> {
+            formData.append('images[]', files[key]);
+        });
+
+        fetch(`${API}/admin/properties/${this.id}/upload`, {
+            method: 'POST',
+            headers:{
+                Accept: 'application/json',
+                'Authorization': `Bearer ${Token}`
+            },
+            body: formData
+        }).then((response) => response.json())
+            .then((res) => {
+                if (res.status === 1) {
+                    this.setState({formClass:"is-success"});
+                    this.fetch();
+                }else {
+                    this.setState({formClass:"is-error"});
+
+                }
+            })
+            .catch((error) => {
+                this.setState({formClass:"is-error"});
+                console.log(error);
+            });
     };
 
     render() {
@@ -113,8 +146,8 @@ class Upload extends React.Component {
 
                 {/*<input type="file" multiple={true} onChange={this.formHandler}/>*/}
             </Layout>
-    );
+        );
     }
-    }
+}
 
-    export default Upload;
+export default Upload;

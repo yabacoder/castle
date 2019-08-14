@@ -7,10 +7,12 @@ import Login from "./components/auth/login";
 import EditProperty from "./components/property/edit";
 import {Logout} from "./components/auth/logout";
 import Upload from "./components/property/upload";
+import Register from "./components/auth/register";
 
 export const Routes = [
     {path:"/", component:Dashboard},
     {path:"/login", component:Login},
+    {path:"/register", component:Register},
     {path:"/logout", component:Logout},
     {path:"/properties", component:Properties},
     {path:"/property/images/:id", component:Upload},
