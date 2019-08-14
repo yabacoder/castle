@@ -67,12 +67,12 @@ class Agents extends React.Component {
         return (
             <Layout title="Agents">
                 <div className="container mt-3">
-                    <div align="right">
+                    {/*<div align="right">
                         <Link to="/add_agent"> <button>Add Agent</button> </Link>
                     </div>
                     <div>
                         <a href="">Migrate</a> | <a href="">Delete</a>
-                    </div>
+                    </div>*/}
                     <table className="table table-striped">
                         <thead>
                         <tr>

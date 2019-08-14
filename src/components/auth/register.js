@@ -2,13 +2,15 @@ import React from 'react';
 import {AuthGet, Post} from "../../helpers/services";
 import {Token} from "../../config";
 import {Redirect} from "react-router-dom";
+import {Input} from "../../helpers/form";
 
 class Register extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             disabled : false,
-            role: 2
+            role: 2,
+            errors:{}
         }
     }
 
@@ -29,8 +31,8 @@ class Register extends React.Component {
             if (result.token_type){
                 localStorage.setItem('castles_token', result.access_token);
                 window.location.reload()
-            }else if (result.message){
-                alert("Email or Password Incorrect!");
+            }else if (result.errors){
+                this.setState({errors: result.errors})
             }
             this.setState({disabled:false});
         }).catch(e=>{
@@ -73,7 +75,7 @@ class Register extends React.Component {
                                 <div className="row">
                                     <div className="field">
                                         <span>
-                                            <input type="email" name="email" onChange={this.onChange} placeholder="Your email" required/>
+                                            <Input type="email" name="email" error={state.errors.email} onChange={this.onChange} placeholder="Your email" required/>
                                         </span>
                                     </div>
                                 </div>
@@ -81,7 +83,7 @@ class Register extends React.Component {
                                 <div className="row">
                                     <div className="field">
                                         <span>
-                                            <input type="text" name="username" onChange={this.onChange} placeholder="Your username" required/>
+                                            <Input type="text" name="username" error={state.errors.username} onChange={this.onChange} placeholder="Your username" required/>
                                         </span>
                                     </div>
                                 </div>
@@ -89,7 +91,7 @@ class Register extends React.Component {
                                 <div className="row">
                                     <div className="field">
                                         <span>
-                                            <input type="password" name="password" placeholder="Your password" onChange={this.onChange} required/>
+                                            <Input type="password" name="password" error={state.errors.password} placeholder="Your password" onChange={this.onChange} required/>
                                         </span>
                                     </div>
                                 </div>
@@ -97,7 +99,7 @@ class Register extends React.Component {
                                 <div className="row">
                                     <div className="field">
                                         <span>
-                                            <input type="password" name="password_confirmation" placeholder="Confirm password" onChange={this.onChange} required/>
+                                            <Input type="password" name="password_confirmation" error={state.errors.password} placeholder="Confirm password" onChange={this.onChange} required/>
                                         </span>
                                     </div>
                                 </div>
