@@ -1,7 +1,7 @@
 import React from 'react';
 import {AuthGet, Get, Post} from "../../helpers/services";
 import {Token} from "../../config";
-import {Redirect} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 
 class Login extends React.Component {
 
@@ -90,6 +90,8 @@ class Login extends React.Component {
                                         Sign In
                                     </button>
                                 </div>
+
+                                <Link to="/register">Register</Link>
 
                             </form>
 
